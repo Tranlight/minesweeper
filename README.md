@@ -1,5 +1,12 @@
-### Requirement Analysis
+### Overview
+Web Application that generates a minesweeper board using Ruby on Rails
 
+### Deploy to heroku
+<a href="https://www.heroku.com/deploy?template=https://github.com/Tranlight/minesweeper">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a> 
+
+### Requirement Analysis
 **Primary Functionalities:**
 1. **User Input and Board Generation**:
   - A homepage to input user details (email, board dimensions, number of mines, and board name).
@@ -31,11 +38,10 @@
 #### **1. Setup and Environment Configuration**
 - Initialize a new Rails app.
 - Set up Heroku for deployment.
-- Configure the database (PostgreSQL is recommended for Heroku).
+- Configure the Mysql database.
 - Add necessary gems:
   - **`bootstrap`** for CSS styling.
-  - **`pg`** for PostgreSQL.
-  - **`simple_form`** for forms.
+  - **`mysql`** for Mysql.
   - **`kaminari`** for pagination (optional feature).
 
 #### **2. Database Design**
@@ -45,17 +51,15 @@
     - `email`: string
     - `width`: integer
     - `height`: integer
-    - `mine_count`: integer
-    - `board_state`: JSON or text (to store the generated 2D array)
+    - `total_mines`: integer
   - **Timestamps**.
 
 #### **3. Minesweeper Board Generation Algorithm**
-- Input: `width`, `height`, and `mine_count`.
-- Steps:
-  1. Initialize a 2D array with empty cells.
-  2. Randomly place mines (`mine_count`) across the grid.
-  3. For each cell, calculate and store the number of adjacent mines.
-- Output: 2D array of objects representing cell states.
+- **Input:** `width`, `height`, and `total_mines`.  
+- **Steps:**  
+  1. Divide the board into smaller blocks.  
+  2. Randomly place mines in blocks overlapping the current view.  
+- **Output:** A 2D array of objects representing cell states within the view.  
 
 #### **4. Application Features**
 - **Homepage**:
@@ -77,7 +81,7 @@
 
 #### **5. Testing**
 - Test the Minesweeper generation algorithm with various board sizes and mine counts.
-- Validate forms for proper inputs (e.g., ensure `mine_count` doesn’t exceed the total number of cells).
+- Validate forms for proper inputs (e.g., ensure `total_mines` doesn’t exceed the total number of cells).
 - Write feature tests for the user flow and board visualization.
 
 #### **6. Deployment**

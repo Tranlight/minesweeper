@@ -3,7 +3,7 @@
   "description": "A Rails app configured to use MySQL with the JawsDB addon.",
   "repository": "https://github.com/Tranlight/minesweeper", 
   "keywords": ["rails", "mysql", "jawsdb", "heroku"],
-  "stack": "heroku-20",
+  "stack": "heroku-24",
   "env": {
     "RAILS_ENV": {
       "description": "Rails environment",

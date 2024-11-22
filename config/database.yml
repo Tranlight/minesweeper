@@ -54,7 +54,7 @@ development:
 production:
   primary: &primary_production
     <<: *default
-    url: <%= ENV["DB_URL"] %>
+    url: <%= ENV["JAWSDB_URL"] %>
   cache:
     <<: *primary_production
     database: minesweeper_production_cache
