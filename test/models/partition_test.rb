@@ -1,6 +1,6 @@
 require "test_helper"
 
-class BoardViewTest < ActiveSupport::TestCase
+class PartitionTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -2,9 +2,10 @@ services:
   web:
     build: .
     volumes:
-      - .:/minesweeper
+      - .:/rails
     environment:
       RAILS_ENV: development
+      DB_USERNAME: root
     ports:
       - "80:80"
     depends_on:

@@ -1,6 +1,6 @@
-class SearchBoardViewService < ApplicationService
-  VIEW_WIDTH = 3 # Example; replace with actual value if dynamic
-  VIEW_HEIGHT = 3 # Example; replace with actual value if dynamic
+class SearchPartitionService < ApplicationService
+  VIEW_WIDTH = 20 # Example; replace with actual value if dynamic
+  VIEW_HEIGHT = 20 # Example; replace with actual value if dynamic
 
   private
 

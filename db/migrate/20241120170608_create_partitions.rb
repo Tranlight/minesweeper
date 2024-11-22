@@ -1,6 +1,6 @@
-class CreateBoardViews < ActiveRecord::Migration[8.0]
+class CreatePartitions < ActiveRecord::Migration[8.0]
   def change
-    create_table :board_views do |t|
+    create_table :partitions do |t|
       t.integer :x
       t.integer :y
       t.integer :width

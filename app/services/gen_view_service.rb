@@ -10,8 +10,8 @@ class GenViewService < ApplicationService
 
   def call
     view_points = generate_view_points(@view)
-    board_views = fetch_or_create_board_views(view_points)
-    mines = fetch_mines(board_views)
+    partitions = fetch_or_create_partitions(view_points)
+    mines = fetch_mines(partitions)
     build_mine_grid(@view, mines)
   end
 
@@ -39,17 +39,17 @@ class GenViewService < ApplicationService
     ]
   end
 
-  def fetch_or_create_board_views(view_points)
-    partitions = SearchBoardViewService.call(@board, view_points)
-    BoardView.transaction do
+  def fetch_or_create_partitions(view_points)
+    partitions = SearchPartitionService.call(@board, view_points)
+    Partition.transaction do
       partitions.map do |partition|
-        BoardView.find_or_create_by!(board_id: @board.id, **partition)
+        Partition.find_or_create_by!(board_id: @board.id, **partition)
       end
     end
   end
 
   def fetch_mines(board_views)
-    Mine.where(board_view_id: board_views.map(&:id))
+    Mine.select(:x, :y).where(board_view_id: board_views.map(&:id))
   end
 
   def build_mine_grid(view, mines)
