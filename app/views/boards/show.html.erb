@@ -19,8 +19,8 @@
             <button name="direction" value="left" class="btn btn-success btn-block my-1">←</button>
             <button name="direction" value="right" class="btn btn-warning btn-block my-1">→</button>
             <button name="direction" value="down" class="btn btn-danger btn-block my-1">↓</button>
+            <button class="btn btn-outline-secondary">Reset x</button>
           <% end %>
-          <a href="<%= board_path(@board) %>" class="btn btn-warning btn-block mt-3">Reset</a>
           <a href="/" class="btn btn-secondary btn-block mt-3">Back to Home</a>
         </div>
       </div>
@@ -45,7 +45,7 @@
               <tr>
                 <th><%= start_row + row_index %></th>
                 <% row.each do |cell| %>
-                  <td class="<%= cell == 1 ? 'bg-danger' : 'bg-success' %>">
+                  <td class="<%= cell == 1 ? 'bg-danger' : 'bg-cell' %>">
                     <% if cell == 1 %>💣<% end %>
                   </td>
                 <% end %>
@@ -62,25 +62,28 @@
   .custom-table {
     table-layout: fixed;
     border-collapse: collapse;
-    border-radius: 10px;
+    border-radius: 8px;
     border-style: hidden; /* hide standard table (collapsed) border */
     box-shadow: 0 0 0 1px #666; /
   }
 
-  table thead th:last-child {
-    border-top-right-radius: 10px;
+  .custom-table thead th:last-child {
+    border-top-right-radius: 8px;
   }
 
-  table thead th:first-child {
-    border-top-left-radius: 10px;
+  .custom-table thead th:first-child {
+    border-top-left-radius: 8px;
   }
 
-  table tr:last-child th:first-child {
-    border-bottom-left-radius: 10px;
+  .custom-table tr:last-child th:first-child {
+    border-bottom-left-radius: 8px;
   }
-      
-  table tr:last-child td:last-child {
-      border-bottom-right-radius: 10px;
+
+  .custom-table td {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
   .custom-table th,
   .custom-table td {
@@ -88,5 +91,9 @@
     height: 20px; /* Adjust as needed */
     text-align: center;
     vertical-align: middle;
+  }
+
+  .custom-table .bg-cell {
+    background-color: #80868b;
   }
 </style>

@@ -15,11 +15,23 @@
             <div class="form-group mb-3">
               <%= form.label :email, "Your Email", class: "form-label" %>
               <%= form.email_field :email, class: "form-control", placeholder: "Enter your email", required: true %>
+              <% if @board.errors[:email].any? %>
+                <div class="text-danger">
+                  <%= Board.human_attribute_name(:email) %>
+                  <%= @board.errors[:email].join(", ") %>
+                  </div>
+              <% end %>
             </div>
 
             <div class="form-group mb-3">
               <%= form.label :name, "Board Name", class: "form-label" %>
               <%= form.text_field :name, class: "form-control", placeholder: "Choose a name for your board", required: true %>
+              <% if @board.errors[:name].any? %>
+                <div class="text-danger">
+                  <%= Board.human_attribute_name(:name) %>
+                  <%= @board.errors[:name].join(", ") %>
+                </div>
+              <% end %>
             </div>
 
             <div class="row">
@@ -27,12 +39,24 @@
                 <div class="form-group mb-3">
                   <%= form.label :width, "Board Width", class: "form-label" %>
                   <%= form.number_field :width, class: "form-control", min: 1, placeholder: "e.g., 10", required: true %>
+                  <% if @board.errors[:width].any? %>
+                    <div class="text-danger">
+                      <%= Board.human_attribute_name(:width) %>
+                      <%= @board.errors[:width].join(", ") %>
+                    </div>
+                  <% end %>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group mb-3">
                   <%= form.label :height, "Board Height", class: "form-label" %>
                   <%= form.number_field :height, class: "form-control", min: 1, placeholder: "e.g., 10", required: true %>
+                  <% if @board.errors[:height].any? %>
+                    <div class="text-danger">
+                      <%= Board.human_attribute_name(:height) %>
+                      <%= @board.errors[:height].join(", ") %>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -40,6 +64,12 @@
             <div class="form-group mb-3">
               <%= form.label :total_mines, "Number of Mines", class: "form-label" %>
               <%= form.number_field :total_mines, class: "form-control", min: 1, placeholder: "e.g., 20", required: true %>
+              <% if @board.errors[:total_mines].any? %>
+                <div class="text-danger">
+                  <%= Board.human_attribute_name(:total_mines) %>
+                  <%= @board.errors[:total_mines].join(", ") %>
+                </div>
+              <% end %>
             </div>
 
             <%= form.submit "Generate Board", class: "btn btn-primary w-100" %>
@@ -58,7 +88,7 @@
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
               <strong><%= link_to board.name, board_path(board) %></strong> 
-              <small > size <%= board.width %> x <%= board.height %> </small> 
+              <small>size <%= board.width %> x <%= board.height %></small> 
               <small class="text-muted">by <%= board.email %> on <%= board.created_at.strftime("%B %d, %Y %H:%M") %></small>
             </div>
           </li>
