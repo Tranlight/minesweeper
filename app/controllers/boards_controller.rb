@@ -8,7 +8,8 @@ class BoardsController < ApplicationController
     if @board.save
       redirect_to board_path(@board), notice: "Board created successfully!"
     else
-      render :new
+      @recent_boards = Board.order(created_at: :desc).limit(10)
+      render template: "home/dashboard", status: :unprocessable_entity
     end
   end
 
@@ -19,7 +20,7 @@ class BoardsController < ApplicationController
 
   def index
     @boards = Board.order(created_at: :desc)
-    @boards = @boards.limit(10)
+    @boards = @boards.page(params[:page]).per(10)
   end
 
   private
