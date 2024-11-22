@@ -89,7 +89,7 @@
             <div>
               <strong><%= link_to board.name, board_path(board) %></strong> 
               <small>size <%= board.width %> x <%= board.height %></small> 
-              <small class="text-muted">by <%= board.email %> on <%= board.created_at.strftime("%B %d, %Y %H:%M") %></small>
+              <small class="text-muted"> was created by <%= board.email %> on <%= board.created_at.strftime("%B %d, %Y %H:%M") %></small>
             </div>
           </li>
         <% end %>

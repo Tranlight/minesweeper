@@ -89,15 +89,14 @@
 
 | Task                             | Estimated Time | Notes                                      |
 | -------------------------------- | -------------- | ------------------------------------------ |
-| Initialize Rails project         | 1 hour         | Includes gem setup and environment config. |
-| Database and Models              | 1 hour         | Design and implement Board model.          |
-| Board Generation Algorithm       | 2-3 hours      | Optimize for performance.                  |
-| Homepage and Board Creation Form | 2-3 hours      | Use Bootstrap for styling.                 |
-| Board Visualization              | 2-3 hours      | Display boards as a grid.                  |
-| Recent Boards and Navigation     | 1-2 hours      | Include links and pagination if needed.    |
-| Testing                          | 2-3 hours      | Algorithm and feature tests.               |
-| Deployment                       | 1 hour         | Push to GitHub and deploy on Heroku.       |
-| Optional Features                | 2-4 hours      | Search, filter, or pagination.             |
+| Initialize Rails project         | 3 hours        | Includes gem setup and environment config. |
+| Design Database and Models       | 2 hours        | Design and implement Board model.          |
+| Board Generation Algorithm       | 8 hours        | Optimize for performance.                  |
+| Homepage and Board Creation Form | 3 hours        | Use Bootstrap for styling.                 |
+| Board Visualization              | 8 hours        | Display boards as a grid.                  |
+| Recent Boards and Navigation     | 2 hours        | Include links and pagination if needed.    |
+| Testing                          | 3 hours        | Algorithm and feature tests.               |
+| Deployment                       | 2 hours        | Push to GitHub and deploy on Heroku.       |
 
 ### Deliverables
 1. **Public GitHub Repo**:
