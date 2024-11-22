@@ -1,0 +1,133 @@
+<div class="container mt-5">
+  <div class="text-center">
+    <h1 class="display-4"><%= @board.name %> Board</h1>
+    <p> Row: <%= @board.height %>, Column: <%= @board.width %>, Total Mines: <%= @board.total_mines %></p>
+    <p>Email: <%= @board.email %></p>
+    <p>Created At: <%= @board.created_at.strftime("%B %d, %Y %H:%M") %></p>
+  </div>
+</div>
+
+<div class="ruler-wrapper">
+  <!-- Top Ruler -->
+  <div class="top-ruler">
+    <% start_col = session[:current_view][:x] || 0 %>
+    <% @view_grid.first.each_index do |col| %>
+      <div class="ruler-index top-ruler-index"><%= start_col + col %></div>
+    <% end %>
+  </div>
+
+  <div class="grid-with-side-ruler">
+    <!-- Left Ruler -->
+    <div class="left-ruler">
+      <% start_row = session[:current_view][:y] || 0 %>
+      <% @view_grid.each_index do |row| %>
+        <div class="ruler-index left-ruler-index"><%= start_row + row %></div>
+      <% end %>
+    </div>
+
+      <!-- Grid -->
+      <div class="grid">
+        <% @view_grid.each do |row| %>
+          <% row.each do |cell| %>
+            <div class="cell <%= cell == 1 ? 'mine' : 'empty' %>">
+              <%= cell == 1 ? '💣' : '' %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center my-3">
+    <!-- Navigation Buttons -->
+    <%= form_with url: board_path(@board), method: :get, local: true do %>
+      <button name="direction" value="up" class="btn btn-primary m-1">↑</button>
+      <button name="direction" value="left" class="btn btn-primary m-1">←</button>
+      <button name="direction" value="right" class="btn btn-primary m-1">→</button>
+      <button name="direction" value="down" class="btn btn-primary m-1">↓</button>
+    <% end %>
+  </div>
+
+  <div class="card-footer text-center">
+    <a href="/" class="btn btn-secondary">Back to Home</a>
+  </div>
+</div>
+
+<style>
+  .ruler-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 0 auto;
+  }
+
+  .top-ruler {
+    display: flex;
+    margin-left: 40px;
+  }
+
+  .grid-with-side-ruler {
+    display: flex;
+  }
+
+  .left-ruler {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grid {
+    display: grid;
+    <% view_width = @view_grid ? @view_grid[0].size : 0 %>
+    grid-template-columns: repeat(<%= view_width %>, 40px);
+    gap: 2px;
+    justify-content: center;
+  }
+
+  .cell {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .cell:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+
+  .mine {
+    background-color: #dc3545;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .empty {
+    background-color: #e9ecef;
+  }
+
+  .cell:hover {
+    transform: scale(1.1);
+    background-color: #f8f9fa;
+  }
+
+  .ruler-index {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: 1px solid #ccc;
+  }
+
+  .top-ruler-index {
+    margin-right: 2px;
+  }
+
+  .left-ruler-index {
+    margin-bottom: 2px;
+  }
+</style>

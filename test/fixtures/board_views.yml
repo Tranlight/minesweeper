@@ -1,15 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  email: MyString
+  x: 1
+  'y': 1
   width: 1
   height: 1
-  total_mines: 1
 
 two:
-  name: MyString
-  email: MyString
+  x: 1
+  'y': 1
   width: 1
   height: 1
-  total_mines: 1

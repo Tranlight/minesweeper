@@ -5,8 +5,8 @@ class CreateBoards < ActiveRecord::Migration[8.0]
       t.string :email
       t.integer :width
       t.integer :height
-      t.integer :mines
-      t.json :board_state
+      t.integer :total_mines
+      t.integer :generated_mines, default: 0
 
       t.timestamps
     end
