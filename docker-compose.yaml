@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/minesweeper
+    ports:
+      - "80:80"
