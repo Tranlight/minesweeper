@@ -26,7 +26,7 @@ class GenMineService < ApplicationService
 
   def mine_count
     ratio = (@block[:width] * @block[:height]) / @board.size.to_f
-    [(@board.total_mines * ratio).ceil, @board.total_mines - @board.generated_mines].min
+    [ (@board.total_mines * ratio).ceil, @board.total_mines - @board.generated_mines ].min
   end
 
   def build_mines(mine_positions)
