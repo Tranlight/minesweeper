@@ -1,0 +1,32 @@
+{
+  "name": "Rails MySQL App",
+  "description": "A Rails app configured to use MySQL with the JawsDB addon.",
+  "repository": "https://github.com/Tranlight/minesweeper", 
+  "keywords": ["rails", "mysql", "jawsdb", "heroku"],
+  "stack": "heroku-20",
+  "env": {
+    "RAILS_ENV": {
+      "description": "Rails environment",
+      "value": "production"
+    },
+    "RAILS_LOG_TO_STDOUT": {
+      "description": "Log Rails output to STDOUT for Heroku logs",
+      "value": "enabled"
+    },
+    "RAILS_SERVE_STATIC_FILES": {
+      "description": "Serve static files from Rails in production",
+      "value": "enabled"
+    }
+  },
+  "addons": [
+    "jawsdb:kitefin"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/ruby"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  }
+}

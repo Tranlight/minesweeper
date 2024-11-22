@@ -9,10 +9,25 @@ class GenViewService < ApplicationService
   end
 
   def call
-    view_points = generate_view_points(@view)
-    partitions = fetch_or_create_partitions(view_points)
-    mines = fetch_mines(partitions)
+    blocks = generate_blocks_hash
+    mines = Mine.where(board_id: @board, block_hash: blocks.keys)
+    stored_block_hashes = mines.pluck(:block_hash).uniq
+    new_block_hashes = blocks.keys - stored_block_hashes
+    generate_new_mines(blocks, new_block_hashes)
+    
     build_mine_grid(@view, mines)
+  end
+  
+  private
+  
+  def generate_blocks_hash
+    SearchBlockService.call(@board, @view).each_with_object({}) do |block, hash|
+      hash[Mine.gen_block_hash(@board.id, block[:x], block[:y])] = block
+    end
+  end
+  
+  def generate_new_mines(blocks, new_block_hashes)
+    new_block_hashes.each { |hash| GenMineService.call(@board, blocks[hash]) }
   end
 
   def validate_inputs(board, view)
@@ -30,32 +45,17 @@ class GenViewService < ApplicationService
   end
 
   def generate_view_points(view)
-    x, y, width, height = view.values_at(:x, :y, :width, :height)
     [
-      [x, y],
-      [x + width, y],
-      [x, y + height],
-      [x + width, y + height]
+      [view[:x], view[:y]],
+      [view[:x] + view[:width], view[:y]],
+      [view[:x], view[:y] + view[:height]],
+      [view[:x] + view[:width], view[:y] + view[:height]]
     ]
-  end
-
-  def fetch_or_create_partitions(view_points)
-    partitions = SearchPartitionService.call(@board, view_points)
-    Partition.transaction do
-      partitions.map do |partition|
-        Partition.find_or_create_by!(board_id: @board.id, **partition)
-      end
-    end
-  end
-
-  def fetch_mines(board_views)
-    Mine.select(:x, :y).where(board_view_id: board_views.map(&:id))
   end
 
   def build_mine_grid(view, mines)
     height, width = view.values_at(:height, :width)
     grid = Array.new(height) { Array.new(width, 0) }
-
     mines.each do |mine|
       map_mine_to_grid(grid, mine, view)
     end

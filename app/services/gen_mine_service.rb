@@ -1,15 +1,14 @@
 class GenMineService < ApplicationService
   private
 
-  def initialize(partition)
-    @partition = partition
-    @board = partition.board
+  def initialize(board, block)
+    @block = block
+    @board = board
   end
 
   def call
     # Calculate the number of mines for this view
-    total_cells = @partition.width * @partition.height
-    total_board_cells = @board.width * @board.height
+    total_cells = @block[:width] * @block[:height]
 
     return if mine_count <= 0
 
@@ -19,22 +18,26 @@ class GenMineService < ApplicationService
       random_index = rand(0...total_cells)
       mine_positions[random_index] ||= true
     end
-
-    Mine.insert_all(build_mines(mine_positions))
+    Mine.transaction do
+      Mine.insert_all!(build_mines(mine_positions))
+      @board.update!(generated_mines: @board.generated_mines + mine_count)
+    end
   end
 
   def mine_count
-    ratio = (@partition.width * @partition.height) / total_board_cells.to_f
-    (@board.total_mines * ratio).ceil
+    ratio = (@block[:width] * @block[:height]) / @board.size.to_f
+    [(@board.total_mines * ratio).ceil, @board.total_mines - @board.generated_mines].min
   end
 
   def build_mines(mine_positions)
     # Map the positions to mine records for bulk insertion
-    mine_positions.each_with_object([]) do |index, positions|
-      positions << {
-        partition_id: @partition.id,
-        x: index % @partition.width + @partition.x,
-        y: (index / @partition.width) + @partition.y
+    mine_positions.map do |position, _|
+      {
+        board_id: @board.id,
+        x: position % @block[:width] + @block[:x],
+        y: position / @block[:width] + @block[:y],
+        block_hash: Mine.gen_block_hash(@board.id, @block[:x], @block[:y])
       }
     end
   end
+end

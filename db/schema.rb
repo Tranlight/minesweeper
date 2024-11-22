@@ -17,6 +17,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_20_170623) do
     t.integer "width"
     t.integer "height"
     t.integer "total_mines"
+    t.integer "generated_mines", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -24,23 +25,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_20_170623) do
   create_table "mines", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "x"
     t.integer "y"
-    t.bigint "partition_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["partition_id"], name: "index_mines_on_partition_id"
-  end
-
-  create_table "partitions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.integer "x"
-    t.integer "y"
-    t.integer "width"
-    t.integer "height"
+    t.string "block_hash"
     t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["board_id"], name: "index_partitions_on_board_id"
+    t.index ["block_hash"], name: "index_mines_on_block_hash"
+    t.index ["board_id"], name: "index_mines_on_board_id"
   end
 
-  add_foreign_key "mines", "partitions"
-  add_foreign_key "partitions", "boards"
+  add_foreign_key "mines", "boards"
 end

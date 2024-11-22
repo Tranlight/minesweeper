@@ -13,7 +13,7 @@ class BoardsController < ApplicationController
 
   def show
     @board = Board.find(params[:id])
-    @view_grid = GenViewService.call(@board, current_view)
+  @view_grid = GenViewService.call(@board, current_view)
   end
 
   def index

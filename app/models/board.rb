@@ -4,7 +4,7 @@ class Board < ApplicationRecord
   validates :width, :height, :total_mines, numericality: { greater_than: 0 }
   validates :total_mines, numericality: { less_than_or_equal_to: :size }
 
-  has_many :partitions
+  has_many :mines
 
   def size
     width * height

@@ -14,6 +14,8 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Size</th>
+        <th>Total Mines</th>
         <th>Creator Email</th>
         <th>Created At</th>
         <th>Actions</th>
@@ -23,6 +25,8 @@
       <% @boards.each do |board| %>
         <tr>
           <td><%= link_to board.name, board_path(board) %></td>
+          <td><%= board.width %> x <%= board.height %></td>
+          <td><%= board.total_mines %></td>
           <td><%= board.email %></td>
           <td><%= board.created_at.strftime('%B %d, %Y %H:%M') %></td>
           <td>
