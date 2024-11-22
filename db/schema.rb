@@ -11,18 +11,18 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2024_11_20_170623) do
-  create_table "board_views", force: :cascade do |t|
+  create_table "board_views", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "x"
     t.integer "y"
     t.integer "width"
     t.integer "height"
-    t.integer "board_id", null: false
+    t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_board_views_on_board_id"
   end
 
-  create_table "boards", force: :cascade do |t|
+  create_table "boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.integer "width"
@@ -33,10 +33,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_20_170623) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "mines", force: :cascade do |t|
+  create_table "mines", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "x"
     t.integer "y"
-    t.integer "board_view_id", null: false
+    t.bigint "board_view_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_view_id"], name: "index_mines_on_board_view_id"

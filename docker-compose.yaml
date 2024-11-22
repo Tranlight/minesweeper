@@ -3,5 +3,20 @@ services:
     build: .
     volumes:
       - .:/minesweeper
+    environment:
+      RAILS_ENV: development
     ports:
       - "80:80"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: minesweeper_development
+      MYSQL_USER: minesweeper
+      MYSQL_PASSWORD: minesweeper
+      MYSQL_ROOT_PASSWORD: minesweeper
