@@ -20,8 +20,8 @@
         <% @boards.each do |board| %>
           <tr>
             <td><%= link_to board.name, board_path(board), class: 'text-decoration-none' %></td>
-            <td><%= board.width %> x <%= board.height %></td>
-            <td><%= board.total_mines %></td>
+            <td><%= number_with_delimiter(board.width) %> x <%= number_with_delimiter(board.height) %></td>
+            <td><%= number_with_delimiter(board.total_mines) %></td>
             <td><%= board.email %></td>
             <td><%= board.created_at.strftime('%B %d, %Y %H:%M') %></td>
             <td>

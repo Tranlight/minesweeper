@@ -88,7 +88,7 @@
           <li class="list-group-item d-flex justify-content-between align-items-center">
             <div>
               <strong><%= link_to board.name, board_path(board) %></strong> 
-              <small>size <%= board.width %> x <%= board.height %></small> 
+              <small>size <%= number_with_delimiter(board.width) %> x <%= number_with_delimiter(board.height) %></small> 
               <small class="text-muted"> was created by <%= board.email %> on <%= board.created_at.strftime("%B %d, %Y %H:%M") %></small>
             </div>
           </li>

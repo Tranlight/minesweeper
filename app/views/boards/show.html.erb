@@ -6,9 +6,9 @@
         <div class="card-body">
           <h1 class="card-title text-primary display-5"><%= @board.name %> Board</h1>
           <p class="text-muted">
-            <strong>Board size:</strong> <%= @board.height %> x <%= @board.width %><br>
+            <strong>Board size:</strong> <%= number_with_delimiter(@board.height) %> x <%= number_with_delimiter(@board.width) %><br>
             <strong>Current view size:</strong> <%= session[:current_view][:height] %> x <%= session[:current_view][:width] %><br>
-            <strong>Total Mines:</strong> <%= @board.total_mines %><br>
+            <strong>Total Mines:</strong> <%= number_with_delimiter(@board.total_mines) %><br>
             <strong>Email:</strong> <%= @board.email %><br>
             <strong>Created At:</strong> <%= @board.created_at.strftime("%B %d, %Y %H:%M") %>
           </p>

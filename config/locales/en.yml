@@ -28,4 +28,5 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  errors:
+    less_than_or_equal_to: "must be less than or equal to %{count}"
