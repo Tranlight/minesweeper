@@ -6,10 +6,13 @@ services:
     environment:
       RAILS_ENV: development
       DB_USERNAME: root
+      RAILS_LOG_TO_STDOUT: enabled
     ports:
       - "80:80"
     depends_on:
       - db
+    networks:
+      - app-network
 
   db:
     image: mysql:8.0
@@ -21,3 +24,9 @@ services:
       MYSQL_USER: minesweeper
       MYSQL_PASSWORD: minesweeper
       MYSQL_ROOT_PASSWORD: minesweeper
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
