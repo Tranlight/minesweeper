@@ -1,45 +1,93 @@
 <div class="container my-5">
-  <div class="text-center">
-    <h1 class="mb-4 display-4">Minesweeper Boards</h1>
+  <!-- Header Section -->
+  <div class="text-center mb-5">
+    <h1 class="display-4 fw-bold text-primary">Minesweeper Boards</h1>
+    <p class="lead text-muted">Browse through all generated minesweeper boards</p>
   </div>
 
-  <!-- Boards Table -->
-  <div class="table-responsive shadow-sm">
-    <table class="table table-striped table-hover align-middle">
-      <thead class="table-dark">
-        <tr>
-          <th>Name</th>
-          <th>Size</th>
-          <th>Total Mines</th>
-          <th>Creator Email</th>
-          <th>Created At</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @boards.each do |board| %>
-          <tr>
-            <td><%= link_to board.name, board_path(board), class: 'text-decoration-none' %></td>
-            <td><%= number_with_delimiter(board.width) %> x <%= number_with_delimiter(board.height) %></td>
-            <td><%= number_with_delimiter(board.total_mines) %></td>
-            <td><%= board.email %></td>
-            <td><%= board.created_at.strftime('%B %d, %Y %H:%M') %></td>
-            <td>
-              <%= link_to 'View', board_path(board), class: 'btn btn-sm btn-info text-white' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <!-- Search and Filter Section (Optional) -->
+  <div class="row mb-4">
+    <div class="col-md-6 offset-md-3">
+      <%= form_with url: boards_path, method: :get, class: "d-flex gap-2", local: true do |f| %>
+        <%= f.search_field :search, 
+            value: params[:search], 
+            placeholder: "Search by name or email...", 
+            class: "form-control" %>
+        <%= f.submit "Search", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Boards Cards Grid -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
+    <% @boards.each do |board| %>
+      <div class="col">
+        <div class="card h-100 shadow-sm hover-shadow">
+          <div class="card-body">
+            <h5 class="card-title text-primary mb-3">
+              <%= link_to board.name, board_path(board), class: 'text-decoration-none' %>
+            </h5>
+            <div class="card-text">
+              <div class="mb-2">
+                <small class="text-muted">
+                  <i class="bi bi-grid-3x3-gap"></i> Size:
+                  <strong><%= number_with_delimiter(board.width) %> x <%= number_with_delimiter(board.height) %></strong>
+                </small>
+              </div>
+              <div class="mb-2">
+                <small class="text-muted">
+                  <i class="bi bi-bomb"></i> Mines:
+                  <strong><%= number_with_delimiter(board.total_mines) %></strong>
+                </small>
+              </div>
+              <div class="mb-2">
+                <small class="text-muted">
+                  <i class="bi bi-envelope"></i>
+                  <%= board.email %>
+                </small>
+              </div>
+              <div>
+                <small class="text-muted">
+                  <i class="bi bi-clock"></i>
+                  <%= board.created_at.strftime('%B %d, %Y %H:%M') %>
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer bg-transparent border-top-0">
+            <%= link_to board_path(board), class: 'btn btn-outline-primary w-100' do %>
+              <i class="bi bi-eye"></i> View Board
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 
   <!-- Pagination -->
-  <div class="d-flex justify-content-center mt-4">
-    <%= paginate @boards %>
+  <div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation" class="my-4">
+      <%= paginate @boards %>
+    </nav>
   </div>
 
-  <!-- Back to Home Link -->
-  <div class="mt-4 text-center">
-    <%= link_to 'Back to Home', root_path, class: 'btn btn-secondary' %>
+  <!-- Back Button -->
+  <div class="text-center mt-4">
+    <%= link_to root_path, class: 'btn btn-secondary' do %>
+      <i class="bi bi-arrow-left"></i> Back to Home
+    <% end %>
   </div>
 </div>
+
+<% content_for :head do %>
+  <style>
+    .hover-shadow {
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    
+    .hover-shadow:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    }
+  </style>
+<% end %>
