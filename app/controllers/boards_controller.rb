@@ -20,13 +20,13 @@ class BoardsController < ApplicationController
 
   def index
     @boards = Board.order(created_at: :desc)
-    
+
     if params[:search].present?
-      @boards = @boards.where('name LIKE ? OR email LIKE ?', 
-                             "%#{params[:search]}%", 
+      @boards = @boards.where("name LIKE ? OR email LIKE ?",
+                             "%#{params[:search]}%",
                              "%#{params[:search]}%")
     end
-    
+
     @boards = @boards.page(params[:page]).per(2)
   end
 
